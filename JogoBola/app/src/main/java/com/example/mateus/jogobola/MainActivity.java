@@ -1,0 +1,22 @@
+package com.example.mateus.jogobola;
+
+import android.graphics.Canvas;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_main);
+        //TouchScreenView view = new TouchScreenView(this);
+        //setContentView(view);
+
+        GamePongView gpv = new GamePongView(this);
+        setContentView(gpv);
+
+
+
+    }
+}
