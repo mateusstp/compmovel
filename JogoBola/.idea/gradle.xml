@@ -9,8 +9,8 @@
         <option name="gradleJvm" value="1.7" />
         <option name="modules">
           <set>
-            <option value="/media/mateus/DADOS/MEGA/UFOP/1_Periodos/9ºPeriodo/Computacao_Movel/Exercicios/jogoBola/JogoBola" />
-            <option value="/media/mateus/DADOS/MEGA/UFOP/1_Periodos/9ºPeriodo/Computacao_Movel/Exercicios/jogoBola/JogoBola/app" />
+            <option value="/media/mateus/DADOS/MEGA/UFOP/1_Periodos/9ºPeriodo/Computacao_Movel/Exercicios/PongGameSimples/jogoBola/JogoBola" />
+            <option value="/media/mateus/DADOS/MEGA/UFOP/1_Periodos/9ºPeriodo/Computacao_Movel/Exercicios/PongGameSimples/jogoBola/JogoBola/app" />
           </set>
         </option>
       </GradleProjectSettings>

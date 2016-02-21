@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file:///media/mateus/DADOS/MEGA/UFOP/1_Periodos/9ºPeriodo/Computacao_Movel/Exercicios/jogoBola/JogoBola/JogoBola.iml" filepath="/media/mateus/DADOS/MEGA/UFOP/1_Periodos/9ºPeriodo/Computacao_Movel/Exercicios/jogoBola/JogoBola/JogoBola.iml" />
-      <module fileurl="file:///media/mateus/DADOS/MEGA/UFOP/1_Periodos/9ºPeriodo/Computacao_Movel/Exercicios/jogoBola/JogoBola/app/app.iml" filepath="/media/mateus/DADOS/MEGA/UFOP/1_Periodos/9ºPeriodo/Computacao_Movel/Exercicios/jogoBola/JogoBola/app/app.iml" />
+      <module fileurl="file:///media/mateus/DADOS/MEGA/UFOP/1_Periodos/9ºPeriodo/Computacao_Movel/Exercicios/PongGameSimples/jogoBola/JogoBola/JogoBola.iml" filepath="/media/mateus/DADOS/MEGA/UFOP/1_Periodos/9ºPeriodo/Computacao_Movel/Exercicios/PongGameSimples/jogoBola/JogoBola/JogoBola.iml" />
+      <module fileurl="file:///media/mateus/DADOS/MEGA/UFOP/1_Periodos/9ºPeriodo/Computacao_Movel/Exercicios/PongGameSimples/jogoBola/JogoBola/app/app.iml" filepath="/media/mateus/DADOS/MEGA/UFOP/1_Periodos/9ºPeriodo/Computacao_Movel/Exercicios/PongGameSimples/jogoBola/JogoBola/app/app.iml" />
     </modules>
   </component>
 </project>
