@@ -34,19 +34,19 @@ public class Ball extends View{
     public Ball(Context context) {
 
         super(context, null);
-        ball = context.getResources().getDrawable(R.drawable.bola);
+        setBall(context.getResources().getDrawable(R.drawable.bola));
 
         //Recupera dimensoes da imagem
-        setBallWidth_x(ball.getIntrinsicWidth());
-        setBallHeight_y(ball.getIntrinsicHeight());
+        setBallWidth_x(getBall().getIntrinsicWidth());
+        setBallHeight_y(getBall().getIntrinsicHeight());
         direction=new int[2];
         direction[0] =  1;
         direction[1] = -1;
     }
 
     public void drawBall(Canvas canvas){
-        ball.setBounds(xBall, yBall, xBall + ballWidth_x, yBall + ballHeight_y);
-        ball.draw(canvas);
+        getBall().setBounds(xBall, yBall, xBall + ballWidth_x, yBall + ballHeight_y);
+        getBall().draw(canvas);
     }
 
     public void ballToString(){
@@ -135,6 +135,13 @@ public class Ball extends View{
         }
     }
 
+    public Drawable getBall() {
+        return ball;
+    }
+
+    public void setBall(Drawable ball) {
+        this.ball = ball;
+    }
 }
 
 

@@ -18,15 +18,9 @@ import android.view.View;
 public class GamePongView extends View {
 
     private static final String CATEGORIA = "AppNum53";
-    private Drawable imgQuadrado;
-
-    int xQ, yQ;
-
+    int xQ;
     private boolean selecionou;
-    private int larguraTela,
-            alturaTela,
-            larguraImgQuadrado,
-            alturaImgQuadrado;
+    private int larguraTela, alturaTela;
 
     private Handler handler;
     private ControlGamePong controlBall;
@@ -38,26 +32,8 @@ public class GamePongView extends View {
 
         ball = new Ball(context);
         rec = new Rectangle(context);
-      //  ball.setY(200);
-
-       // imgQuadrado = context.getResources().getDrawable(R.drawable.quadrado);
-
-        //Recupera dimensoes da imagem
-        //larguraImgQuadrado = imgQuadrado.getIntrinsicWidth() + 150;
-        //alturaImgQuadrado = imgQuadrado.getIntrinsicHeight();
-
-/*        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) { //chamo um método para melhor organização.
-                updateUI(msg);
-            }
-        };
-
-        ControlGamePong cb = new ControlGamePong(handler,larguraTela,alturaTela,ball);
-        cb.start();
-*/
-        //  movinentaBola();
         setFocusable(true);
+
     }
 
     @Override
@@ -66,8 +42,6 @@ public class GamePongView extends View {
         super.onSizeChanged(width, height, oldw, oldh);
         this.alturaTela = height;
         this.larguraTela = width;
-       // Log.i(CATEGORIA, "onSizeChanged  largura :altura tela = " + larguraTela + ":" + alturaTela);
-        //Log.i(CATEGORIA, "onSizeChanged xQ:yQ = " + xQ + ":" + yQ);
 
         handler = new Handler() {
             @Override
@@ -79,12 +53,10 @@ public class GamePongView extends View {
 
         rec.setyRec(height - rec.getRecHeight_y());
         rec.setxRec(width / 2 - (rec.getRecWidth_x() / 2));
-     //   xQ = width / 2 - (larguraImgQuadrado / 2);
-       // yQ = height - alturaImgQuadrado;
+        xQ=rec.getxRec();
 
         ball.setxBall(width / 2 - (ball.getBallWidth_x() / 2));
         ball.setyBall(height / 2 - (ball.getBallHeight_y() / 2));
-        //Log.i(CATEGORIA, "onSizeChanged xC:yC = " + xC + ":" + yC);
 
         controlBall = new ControlGamePong(handler,larguraTela,alturaTela,ball,rec);
         controlBall.start();
@@ -97,15 +69,6 @@ public class GamePongView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-        //imgQuadrado.setBounds(xQ, yQ, xQ + larguraImgQuadrado, yQ + alturaImgQuadrado);
-        //imgQuadrado.draw(canvas);
-        /*if(collision()){
-            Log.i("COLI", "TRUE: xQ:yQ | xB:yB = " + rec.getxRec() + ":" + rec.getyRec()+" | "+ ball.getxBall() + ":" + ball.getyBall());
-        }else{
-            Log.i("COLI", "FALSE: xQ:yQ | xB:yB = " + rec.getxRec() + ":" + rec.getyRec()+" | "+ ball.getxBall() + ":" + ball.getyBall());
-        }*/
-        //Log.i(CATEGORIA, "onDraw xQ:yQ = " + xQ + ":" + yQ);
         rec.drawRectangle(canvas);
         ball.drawBall(canvas);
     }
@@ -116,35 +79,32 @@ public class GamePongView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
-        Log.i(CATEGORIA, "onTouchEvent largura :altura tela = " + larguraTela + ":" + alturaTela);
-        Log.i(CATEGORIA, "onTouchEvent:x:y = " + x + ":" + y);
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 //Inicia movimento se pressionou a imagem
-                //selecionou = imgQuadrado.copyBounds().contains((int) x, (int) y);
                 selecionou = rec.getRectangle().copyBounds().contains((int) x, (int) y);
                 break;
             case MotionEvent.ACTION_MOVE:
                 //Arrasta o boneco
                 if (selecionou) {
                     //
-                    //if (x - larguraImgQuadrado / 2 > 0 & x + larguraImgQuadrado / 2 < larguraTela) {
                     if (x - rec.getRecWidth_x()/ 2 > 0 & x + rec.getRecWidth_x()/ 2 < larguraTela) {
-                        this.xQ = (int) x - (rec.getRecWidth_x() / 2);
+                      //  this.xQ = (int) x - (rec.getRecWidth_x() / 2);
 
-                        if(xQ > rec.getxRec()){
+                        if((xQ-rec.getxRec())>0){
                             rec.setdirection(1);
-                        }else if(xQ < rec.getxRec()){
+                        }else if((xQ-rec.getxRec())<0){
                             rec.setdirection(-1);
                         }else{
                             rec.setdirection(0);
                         }
+
+                        xQ=rec.getxRec();
                         rec.setxRec(this.xQ = (int) x - (rec.getRecWidth_x() / 2));
-                        // this.y = (int) y - (alturaImgQuadrado / 2);
-                        //this.yQ = (alturaTela - rec.getRecHeight_y() / 2) - rec.getRecHeight_y()/ 2);
-                        //rec.setyRec((alturaTela - rec.getRecHeight_y() / 2) - rec.getRecHeight_y()/ 2);
+
                     }
+
                 }
                 break;
             case MotionEvent.ACTION_UP:
@@ -166,10 +126,6 @@ public class GamePongView extends View {
            // String texto = (String) msg.obj;
             //defino no meu TextView o texto.
             invalidate();
-        } else if (msg.what == 2) {
-            //finalizo a activity
-
-
         }
     }
 

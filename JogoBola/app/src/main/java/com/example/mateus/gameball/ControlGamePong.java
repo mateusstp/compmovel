@@ -33,7 +33,7 @@ public class ControlGamePong extends Thread {
         this.screenHeight_y = screenHeight_y;
 
         this.ball = ball;
-        this.rectangle=r;
+        this.rectangle = r;
 
         boundtop = 0;
         bounddown = screenHeight_y;
@@ -48,163 +48,88 @@ public class ControlGamePong extends Thread {
                 Message message = new Message();
                 //defino um codigo para controle.
                 message.what = 1;
-                //aqui posso passar qualquer objeto.
-                // No caso estou passando uma
-                // String
-                //message.obj = runBall;
-
-
-                //simula processamento de 1seg
+                //delay
                 Thread.sleep(3);
-               /* int boundBelowX  = ball.getxBall() - ball.getBallWidth_x() / 2;
-                int boundHigherX = ball.getxBall() + ball.getBallWidth_x()-7;
-                Log.i(CATEGORIA,"boundBelowX : boundHigherX | +screenWidth_x -> " + boundBelowX +" : "+boundHigherX +" | "+screenWidth_x);
-                if ((ball.getxBall() - ball.getBallWidth_x() / 2) > 0 & ball.getxBall() + ball.getBallWidth_x()-7 < screenWidth_x) {
-                    // xC = ((int) xC - (larguraImgCirculo / 2)) + 1;
-                    // this.y = (int) y - (alturaImgQuadrado / 2);
-                    //yC = ((int) yC + alturaImgCirculo / 2) + 1;
-                    ball.incrementX();
-
-                    // yC++;
-                } /*else {
-                    ball.decrementX();
-                }*/
-                //trajectoryBall();
-                checkBoundAndDefineDirection();
+                collisionBallRectangle();
+                collisionWall();
                 ball.move();
-             //   ball.ballToString();
                 handler.sendMessage(message);
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        //Note que mudei o código de controle.
-        // O controle dessa mensagem será diferente.
     }
 
-    public void trajectoryBall() {
-        int boundBelowX = ball.getxBall() - ball.getBallWidth_x() + 7;
-        int boundHigherX = ball.getxBall() + ball.getBallWidth_x() - 7;
-     //   Log.i(CATEGORIA, "Displacement boundBelowX : boundHigherX | screenWidth_x -> " + boundBelowX + " : " + boundHigherX + " | " + screenWidth_x);
-        if (boundBelowX > 0 & boundHigherX < screenWidth_x) {
-            /*if (ball.getxBall()+1 > ball.getxBall() ){
-                ball.incrementX();
-                return;
-            }
-            ball.decrementX();*/
-            ball.incrementX();
-            ball.decrementY();
-            //    ball.setY(m*ball.getX());
-        }
-    }
-
-    public void checkBoundAndDefineDirection() {
-
+    private void collisionWall() {
+        /**calc bounds x and y **/
         int boundX;
         int boundY;
-
-
-
-        if (collision()){
-       //     Log.i("COLI", "TRUE: xQ:yQ | xB:yB = " + rectangle.getxRec() + ":" + rectangle.getyRec()+" | "+ ball.getxBall() + ":" + ball.getyBall());
-
-            ball.setdirection(-1*ball.getdirectionX(), -1*ball.getdirectionY());
-            /*if (ball.getdirectionX() == -1 && ball.getdirectionY() == 1) {
-
-                if (rectangle.getdirection()==1) {
-                ball.setdirection(-1, 1);
-                } else  {
-                ball.setdirection(-1, -1);
-                }
-            } else if (ball.getdirectionX() == 1 && ball.getdirectionY() == 1) {
-                  if (rectangle.getdirection()==0 || rectangle.getdirection()==1) {
-                ball.setdirection(1, -1);
-                 } else  {
-                  ball.setdirection(-1, -1);
-                }
-            }*/
-            //ball.move();
-        }
-
-
-
         if (ball.getdirectionX() == 1) {
-              boundX = ball.getxBall() + ball.getBallWidth_x() -14;
-          //  boundX = ball.getxBall() + 7;
+            boundX = ball.getxBall() + ball.getBallWidth_x() - 14;
         } else {
-            //boundX  = ball.getxBall() + ball.getBallWidth_x() +7;
-            boundX  = ball.getxBall()+14;
-            //boundX = ball.getxBall() - 7;
+            boundX = ball.getxBall() + 14;
         }
 
         if (ball.getdirectionY() == 1) {
-            boundY = ball.getyBall() + ball.getBallHeight_y()-14;
-            //boundY = ball.getyBall() + 7;
+            boundY = ball.getyBall() + ball.getBallHeight_y() - 14;
         } else {
-            //boundY = ball.getyBall() - ball.getBallHeight_y() + 7;
-            boundY = ball.getyBall()+14;
-        }
-        if(boundX<0){
-            boundX=0;
-        }
-
-        if(boundY<0){
-            boundY=0;
+            boundY = ball.getyBall() + 14;
         }
 
 
-            if (boundX >= boundright) {
+        /**verify collision wall**/
+        if (boundX >= boundright) {
 
-                if (ball.getdirectionX() == 1 && ball.getdirectionY() == -1) {
-                    ball.setdirection(-1, -1);
-                } else {
-                    ball.setdirection(-1, 1);
-                }
-            } else if (boundY <= boundtop) {
-                if (ball.getdirectionX() == 1 && ball.getdirectionY() == -1) {
-                    ball.setdirection(1, 1);
-                } else {
-                    ball.setdirection(-1, 1);
-                }
-            } else if (boundX <= boundleft) {
-                if (ball.getdirectionX() == -1 && ball.getdirectionY() == -1) {
-                    ball.setdirection(1, -1);
-                } else {
-                    ball.setdirection(1, 1);
-                }
-            } else if (boundY >= bounddown) {
-                if (ball.getdirectionX() == 1 && ball.getdirectionY() == 1) {
-                    ball.setdirection(1, -1);
-                } else {
-                    ball.setdirection(-1, -1);
-                }
-
+            if (ball.getdirectionX() == 1 && ball.getdirectionY() == -1) {
+                ball.setdirection(-1, -1);
+            } else {
+                ball.setdirection(-1, 1);
+            }
+        } else if (boundY <= boundtop) {
+            if (ball.getdirectionX() == 1 && ball.getdirectionY() == -1) {
+                ball.setdirection(1, 1);
+            } else {
+                ball.setdirection(-1, 1);
+            }
+        } else if (boundX <= boundleft) {
+            if (ball.getdirectionX() == -1 && ball.getdirectionY() == -1) {
+                ball.setdirection(1, -1);
+            } else {
+                ball.setdirection(1, 1);
+            }
+        } else if (boundY >= bounddown) {
+            if (ball.getdirectionX() == 1 && ball.getdirectionY() == 1) {
+                ball.setdirection(1, -1);
+            } else {
+                ball.setdirection(-1, -1);
             }
 
-        //Log.i("TRAJ", "top : down : reght: left-> " +boundtop + ":" + bounddown + " | " + boundright + ":" + boundleft);
-        //Log.i("TRAJ", "bX:bY | dx:dy | t:d | r:l-> \" ->  " + boundX + ":" + boundY + " | " + ball.getdirectionX()+ " : " + ball.getdirectionY()+ " | " +boundtop + ":" + bounddown + " | " + boundright + ":" + boundleft);
+        }
+
+
     }
 
-    private boolean collision(){
-        boolean boundCollisionY = ball.getyBall()-14 == (int) (screenHeight_y-rectangle.getRecHeight_y()*1.8);
-        //int boundBelowCollisionX = rectangle.getxRec() +rectangle.getRecWidth_x()/2 ;
-        //int boundHigherCollisionX = rectangle.getxRec() +rectangle.getRecWidth_x()/2 ;
-        //int bCY = ball.getyBall() == (int) (screenHeight_y-rectangle.getRecHeight_y()*1.8);
-        int bBCX = rectangle.getxRec() +rectangle.getRecWidth_x()/2 ;
-        int bHCX = rectangle.getxRec() +rectangle.getRecWidth_x()/2 ;
 
-        if(boundCollisionY){
-             Log.i("COLIY", "TRUE: yQ|yB = " +rectangle.getyRec()+"|"+ ball.getxBall());
-            boolean boundHigherCollisionX = ball.getxBall() + ball.getBallWidth_x()-14 <= rectangle.getxRec()+rectangle.getRecWidth_x()*1.2;
-            boolean boundBelowCollisionX  = ball.getxBall() - ball.getBallWidth_x()+14 >= rectangle.getxRec()-rectangle.getRecWidth_x()*0.7;
-            if(boundHigherCollisionX && boundBelowCollisionX  ){
-             //   Log.i("COLIX", "TRUE: xQ|xB = " +rectangle.getxRec()+"|"+ ball.getxBall());
-                    return  true;
+    private void collisionBallRectangle() {
+
+        //boolean  colisao= rec.getRectangle().copyBounds().contains((int) x, (int) y);
+        boolean boundCollisionY = ball.getyBall() - 14 == (int) (screenHeight_y - rectangle.getRecHeight_y() * 1.8);
+
+        if (boundCollisionY) {
+
+            boolean boundHigherCollisionX = ball.getxBall() + ball.getBallWidth_x() - 14 <= rectangle.getxRec() + rectangle.getRecWidth_x() * 1.2;
+            boolean boundBelowCollisionX = ball.getxBall() - ball.getBallWidth_x() + 14 >= rectangle.getxRec() - rectangle.getRecWidth_x() * 0.7;
+
+            if (boundHigherCollisionX && boundBelowCollisionX) {
+                if (rectangle.getdirection() == 0) {
+                    ball.setdirection(ball.getdirectionX(), -1 * ball.getdirectionY());
+                } else if (rectangle.getdirection() == 1) {
+                    ball.setdirection(1, -1);
+                } else if (rectangle.getdirection() == -1) {
+                    ball.setdirection(-1, -1);
+                }
             }
-          //  return true;
         }
-        return false;
     }
 }
 
